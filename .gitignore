@@ -1,0 +1,6 @@
+# dif
+node_modules
+.idea/
+
+#files
+.env
