@@ -1,12 +1,23 @@
 const express = require('express')
 const fs = require('fs')
 
+const PortfolioService = require('../services/portfolio')
+
 function productsAPI(app){
     const router = express.Router()
+    const portfolioService = new PortfolioService()
+
     app.use('/general_api', router)
 
-    router.get('/', (req, res, next) => {
-        res.status(200).json({mensaje: 'aqui mensaje'})
+    router.get('/', async (req, res, next) => {
+        try {
+            const portfolioData = await portfolioService.getPortfolioData()
+
+            res.status(200).json({data: portfolioData})
+        } catch (e) {
+            res.status(200).json({error: e})
+            next(e)
+        }
     })
 }
 
